@@ -1,0 +1,2 @@
+mary, b'$2b$12$534Nu5J63z2UNlrVKC8AGuzA3E9lucW0fcTlglls5ZjEgwaRKiUke', cybersecurity engineer
+mary, b'$2b$12$t2zQtIZWk6HPrYeJxC47FeYHz5K6zNefIMQ6sE0olqpEYzO8kwZl.', cybersecurity engineer
