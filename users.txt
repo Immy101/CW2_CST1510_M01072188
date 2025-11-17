@@ -1,2 +1,4 @@
 mary, b'$2b$12$534Nu5J63z2UNlrVKC8AGuzA3E9lucW0fcTlglls5ZjEgwaRKiUke', cybersecurity engineer
 mary, b'$2b$12$t2zQtIZWk6HPrYeJxC47FeYHz5K6zNefIMQ6sE0olqpEYzO8kwZl.', cybersecurity engineer
+maary, b'$2b$12$rWjaiwv86qs.U5XEOCAlWuWwsBzhdXy4qTEBLcOEtAn8ev78tUjRq', tailor
+david, b'$2b$12$OwtIQC0MUHT4jFc9.JcvnuuDp3mVu6YuOa6189XYnRUujftoEgm5G', cybersecurity engineer
