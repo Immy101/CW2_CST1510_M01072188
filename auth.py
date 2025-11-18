@@ -15,7 +15,7 @@ def verify(username, password):
         return False
     return True
 def login(username, password):
-    with open("users.txt", 'r') as f:
+    with open("C:/Users/Admin/OneDrive/Desktop/CW2_CST1510_M01072188/CW2_CST1510_M01072188/DATA/users.txt", 'r') as f:
         for line in f.readlines():
             try:
                 user, hashp, roles=line.strip().split(',',2)
@@ -27,7 +27,7 @@ def login(username, password):
 def register(username, password, role):
     password_strength=pw_strength(password)
     hash_password1=hash_password(password)
-    with open("users.txt", 'a') as f:
+    with open("C:/Users/Admin/OneDrive/Desktop/CW2_CST1510_M01072188/CW2_CST1510_M01072188/DATA/users.txt", 'a') as f:
         #use "a" for append because the "w" for write would write over everything and erase the already entered information
         f.write(f"{username}, {hash_password1}, {role}\n")
     print(f"{username}, {role} has registered.")
