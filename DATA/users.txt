@@ -1,0 +1,3 @@
+mary, b'$2b$12$PJBLxhYH6XWP6meRPs0F0e6qeGlDD.JhU4slZBhn2nHvo34EFwSLC', teacher
+mary, b'$2b$12$vDioZM4Fuq.ftqmLqFe47uN/x7wQkMNhjWx.qxRn2UbZR8804.0CK', cybersecurity engineer
+mary , b'$2b$12$9ldAj/.iNAo09eD40bgiderB7wsxH79CDkV8hlF6VXJjtI8hJs6I2', student
