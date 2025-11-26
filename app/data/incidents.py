@@ -1,6 +1,6 @@
 import pandas as pd
 from pathlib import Path
-from db import connect_database
+from app.data.db import connect_database
 from app.data.schema import cybersecurity_table
 conn=connect_database()
 table=cybersecurity_table(conn)
@@ -48,7 +48,6 @@ def insert_incident(conn, date, incident_type, severity, status, description, re
     )
     conn.commit()
     incident=cursor.lastrowid
-    conn.close()
     return incident
 
 def get_all_incidents(conn):
@@ -61,7 +60,7 @@ def update_incident_status(conn, status, id):
         "UPDATE incidents SET status =? WHERE id=?",(status, id)
     )
     conn.commit()
-    rows=cursor.rowcount()
+    rows=cursor.rowcount
     if rows > 0:
         conn.close()
         return rows
@@ -74,7 +73,7 @@ def delete_incident(conn,id):
         "DELETE FROM incidents WHERE id=?", (id,)
     )
     conn.commit()
-    rows_deleted=cursor.rowcount()
+    rows_deleted=cursor.rowcount
     return rows_deleted
 
 #get statistical analysis from the data in cyber_incidents table
@@ -113,16 +112,3 @@ def get_incident_types_with_many_cases(conn, min_count=5):
     df = pd.read_sql_query(query, conn, params=(min_count,))
     return df
 
-print("\n Incidents by Type:")
-df_by_type = get_incidents_by_type_count(conn)
-print(df_by_type)
-
-print("\n High Severity Incidents by Status:")
-df_high_severity = get_high_severity_by_status(conn)
-print(df_high_severity)
-
-print("\n Incident Types with Many Cases (>5):")
-df_many_cases = get_incident_types_with_many_cases(conn, min_count=5)
-print(df_many_cases)
-
-conn.close()

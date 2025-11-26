@@ -32,9 +32,7 @@ def login(username, password):
     user=cursor.fetchone()
     if not user:
        return False, "Username not found"
-    password=user[2]
     info=verify(username, password)#why can't i use the verify function
-    conn.close()
     return  info 
     #with open("DATA/users.txt", 'r') as f:
         #for line in f.readlines():
@@ -65,7 +63,6 @@ def register(username, password, role):
         "INSERT INTO users (username, password_hash, role) VALUES(?,?,?)", (username, hash_password1, role)
     )
     conn.commit()
-    conn.close()
     #with open("DATA/users.txt", 'a') as f:
         #use "a" for append because the "w" for write would write over everything and erase the already entered information
         #f.write(f"{username}, {hash_password1}, {role}\n")
@@ -108,7 +105,7 @@ def migrate_users(conn, filepath="DATA/users.txt"):
                 username=parts[0]
                 password_hash=parts[1]
                 try:
-                    cursor.execute("INSERT OR IGNORE INTO users(username, password_hash, role) VALUES(?,?,?)",(username, password_hash, role))
+                    cursor.execute("INSERT OR IGNORE INTO users(username, password_hash, role) VALUES(?,?,?)",(username, password_hash, 'user' ))
                     if cursor.rowcount>0:
                         migrated_count+=1
                 except sqlite3.Error as e:
@@ -125,32 +122,32 @@ def migrate_users(conn, filepath="DATA/users.txt"):
     for user in users:
         print(f"{user[0]:<5} {user[1]:<15} {user[2]:<10}")
     print(f"\nTotal users: {len(users)}")
-    conn.close()
+
 
 #Welcome/ display page  
-on=True
-while on:
-    print("*"*60)
-    print("Multi-domain Intelligence platform")
-    print("*"*60)
-    print("Welcome! Please choose from the list of options below.")
-    print("*"*60)
-    print("1.LOGIN")
-    print("2.REGISTER")
-    print("*"*60)
-    option=input("Enter your choice: ")
-    if option == '1':
-        username=input("Enter your username: ")
-        password=input("Enter your password: ")
-        role=input("Enter your role(position): ")
-        login(username, password)
-        on= False
-    elif option == '2':
-        username=input("Enter your username: ")
-        password=input("Enter your password: ")
-        role=input("Enter your role(position): ")
-        register(username, password, role)
-        #migrate_users(conn, filepath="DATA/users.txt")
-        on= False
-    else:
-        print("invalid entry")
+#on=True
+#while on:
+#    print("*"*60)
+#    print("Multi-domain Intelligence platform")
+#    print("*"*60)
+#    print("Welcome! Please choose from the list of options below.")
+#    print("*"*60)
+#    print("1.LOGIN")
+#    print("2.REGISTER")
+#    print("*"*60)
+#    option=input("Enter your choice: ")
+#    if option == '1':
+#        username=input("Enter your username: ")
+#        password=input("Enter your password: ")
+#        role=input("Enter your role(position): ")
+#        login(username, password)
+#        on= False
+#    elif option == '2':
+#        username=input("Enter your username: ")
+#        password=input("Enter your password: ")
+#        role=input("Enter your role(position): ")
+#        register(username, password, role)
+#        #migrate_users(conn, filepath="DATA/users.txt")
+#        on= False
+#    else:
+#        print("invalid entry")
