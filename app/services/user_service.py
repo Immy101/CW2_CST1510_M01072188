@@ -17,8 +17,7 @@ def verify(username, password):
     hash_password1=hash_password(password)
     result1=bcrypt.checkpw(password_bytes, hash_password1)
     if result1:
-        print(f"{username} is verified.")
-        print(f"Welcome {username}!")
+        True
     else:
         return False, "Invalid password."
     return True
@@ -67,7 +66,6 @@ def register(username, password, role):
         #use "a" for append because the "w" for write would write over everything and erase the already entered information
         #f.write(f"{username}, {hash_password1}, {role}\n")
     #print(f"{username}, {role} has registered successfully.")
-    print(f"{username} registered successfully")
     return True
 
 def pw_strength(password):

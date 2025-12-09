@@ -13,7 +13,7 @@ def create_users_table(conn):
     cursor.execute(create_table_sql)
     conn.commit()
     return True
-create_users_table(conn)
+#create_users_table(conn)
 def cybersecurity_table(conn):
     cursor=conn.cursor()
     #date TEXT(format: YYYY-MM-DD),
@@ -37,6 +37,7 @@ def cybersecurity_table(conn):
     cursor.execute(create_table)
     conn.commit()
     return True
+#cybersecurity_table(conn)
 def create_datasets_metadata_table(conn):
     cursor=conn.cursor()
     #category TEXT #(e.g., 'Threat Intelligence', 'Network Logs')
@@ -57,7 +58,7 @@ def create_datasets_metadata_table(conn):
     cursor.execute(create_datasets_metadata)
     conn.commit()
     return True
-create_datasets_metadata_table(conn)
+#create_datasets_metadata_table(conn)
 
 def create_it_tickets_table(conn):
     cursor=conn.cursor()
@@ -82,4 +83,4 @@ def create_it_tickets_table(conn):
     cursor.execute(create_it_tickets)
     conn.commit()
     return True
-create_it_tickets_table(conn)
+#create_it_tickets_table(conn)

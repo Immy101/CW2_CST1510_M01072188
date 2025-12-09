@@ -1,6 +1,6 @@
 import pandas as pd
 from pathlib import Path
-from db import connect_database
+from app.data.db import connect_database
 from app.data.schema import create_datasets_metadata_table
 conn=connect_database()
 table=create_datasets_metadata_table(conn)
@@ -49,7 +49,6 @@ def insert_metadata(conn, dataset_name, category, record_count, source, last_upd
     )
     conn.commit()
     dataset=cursor.lastrowid
-    conn.close()
     return dataset
 
 def get_all_metadata(conn):
@@ -57,10 +56,10 @@ def get_all_metadata(conn):
     return df
 print(get_all_metadata(conn))
 
-def update_metadata_status(conn, category, dataset_name):
+def update_metadata(conn, last_updated, dataset_name):
     cursor=conn.cursor()
     cursor.execute(
-        "UPDATE metadata_table SET category =? WHERE dataset_name=?",(category, dataset_name)
+        "UPDATE metadata_table SET last_updated =? WHERE dataset_name=?",(last_updated, dataset_name)
     )
     conn.commit()
     rows=cursor.rowcount
@@ -70,6 +69,7 @@ def update_metadata_status(conn, category, dataset_name):
     else:
         print(f"{dataset_name} not found")
         return False
+    
 def delete_metadata(conn, dataset_name):
     cursor=conn.cursor()
     cursor.execute(

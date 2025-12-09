@@ -38,7 +38,7 @@ def load_csv_to_table(conn, csv_path):
         return "Success fully loading of data", row_count
     else:
         print(f"{csv_path} does not exist.")
-print(load_csv_to_table(conn, csv_path))
+#print(load_csv_to_table(conn, csv_path))
 
 #functions to read, update and delete data from the cyber incidents table
 def insert_incident(conn, date, incident_type, severity, status, description, reported_by=None):

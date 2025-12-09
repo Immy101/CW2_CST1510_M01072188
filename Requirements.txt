@@ -3,3 +3,5 @@ pandas
 bcrypt
 sqlite3
 streamlit
+numpy
+plotly

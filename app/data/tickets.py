@@ -1,6 +1,6 @@
 import pandas as pd
 from pathlib import Path
-from db import connect_database
+from app.data.db import connect_database
 from app.data.schema import create_it_tickets_table
 conn=connect_database()
 table=create_it_tickets_table(conn)
@@ -50,14 +50,13 @@ def load_csv_to_table(conn, csv_path):
 #load_csv_to_table(conn, csv_path)
 
 #functions to read, update and delete data from the metadata table
-def insert_ticket(conn, ticket_id, priority, status, category, subject, description, created_date, resolved_date, assigned_to):
+def insert_ticket(conn, ticket_id, priority, status, category, subject, description, created_date, assigned_to):
     cursor=conn.cursor()
     cursor.execute(
-        "INSERT INTO IT_tickets_table(ticket_id, priority, status, category, subject, description, created_date, resolved_date, assigned_to) VALUES(?,?,?,?,?,?,?,?,?)", (ticket_id, priority, status, category, subject, description, created_date, resolved_date, assigned_to)
+        "INSERT INTO IT_tickets_table(ticket_id, priority, status, category, subject, description, created_date, assigned_to) VALUES(?,?,?,?,?,?,?,?)", (ticket_id, priority, status, category, subject, description, created_date, resolved_date, assigned_to)
     )
     conn.commit()
     ticket=cursor.lastrowid
-    conn.close()
     return ticket
 
 def get_all_tickets(conn):
@@ -65,10 +64,10 @@ def get_all_tickets(conn):
     return df
 print(get_all_tickets(conn))
 
-def update_ticket_status(conn, status, ticket_id):
+def update_ticket_status(conn, resolved_date,status, ticket_id):
     cursor=conn.cursor()
     cursor.execute(
-        "UPDATE IT_tickets_table SET status =? WHERE ticket_id=?",(status, ticket_id)
+        "UPDATE IT_tickets_table SET resolved_date =?, status =? WHERE ticket_id=?",(resolved_date, status, ticket_id)
     )
     conn.commit()
     rows=cursor.rowcount
