@@ -54,10 +54,10 @@ def get_all_incidents(conn):
     df=pd.read_sql_query("SELECT * FROM incidents", conn)
     return df
 print(get_all_incidents(conn))
-def update_incident_status(conn, status, id):
+def update_incident_status(conn, status, reported_by, incident_type):
     cursor=conn.cursor()
     cursor.execute(
-        "UPDATE incidents SET status =? WHERE id=?",(status, id)
+        "UPDATE incidents SET status =?, reported_by=? WHERE incident_type=?",(status, reported_by, incident_type)
     )
     conn.commit()
     rows=cursor.rowcount
@@ -67,10 +67,11 @@ def update_incident_status(conn, status, id):
     else:
         print(f"{id} not found")
         return False
-def delete_incident(conn,id):
+    
+def delete_incident(conn,incident_type, reported_by):
     cursor=conn.cursor()
     cursor.execute(
-        "DELETE FROM incidents WHERE id=?", (id,)
+        "DELETE FROM incidents WHERE incident_type=?, reported_by=?", (incident_type, reported_by)
     )
     conn.commit()
     rows_deleted=cursor.rowcount

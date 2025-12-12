@@ -27,6 +27,7 @@ if not st.session_state.logged_in:
 st.title("📊 Dashboard")
 st.write("Welcome to the Main Dashboard.")
 st.success(f"Hello, **{st.session_state.username}**! You are logged in.")
+
 with st.sidebar:
     Domains=st.selectbox("Domain", ["Cyber Incidents", "IT tickets", "MetaData"])
 st.sidebar.success("Select a page.")
@@ -39,7 +40,7 @@ if Domains== "Cyber Incidents":
         data=st.selectbox("", ["Insert Incident","Update Incident" , "Delete Incident"])
    if data == "Insert Incident":
         with st.form("New Incident"):
-            date=st.date_input("Date", format="YYYY-MM-DD")
+            date=st.date_input("Date",format="YYYY-MM-DD")
             incident_type=st.text_input("Incident type")
             severity=st.selectbox("Severity",["Low", "Medium", "High", "Critical"])
             status=st.selectbox("Status", ["Open", "In Progress", "Resolved"])
@@ -50,21 +51,29 @@ if Domains== "Cyber Incidents":
                 insert_incident(conn, date, incident_type, severity, status, description, reported_by)
                 st.success("Incident added.")
                 st.rerun
+                
+
    if data == "Update Incident":
         with st.form("Update Incident"):
-            id=st.text_input("ID")
+            incident_type=st.text_input("Incident type")
+            reported_by=st.text_input("Reported By")
             status=st.selectbox("Status", ["Open", "In Progress", "Resolved"])
             submitted=st.form_submit_button("Update Incident")
         if submitted and incident_type:
-                update_incident_status(conn, status, id)
+                update_incident_status(conn, status, reported_by, incident_type)
                 st.success("Incident updated.")
                 st.rerun
+                
+
    if data == "Delete Incident":
         with st.form("Delete Incident"):
-            id=st.text_input("ID")
+            incident_type=st.text_input("Incident type")
+            reported_by=st.text_input("Reported By")
             submitted=st.form_submit_button("Delete Incident")
+            st.warning(f"Delete incident?")
+
         if submitted and incident_type:
-                delete_incident(conn, id)
+                delete_incident(conn, incident_type, reported_by)
                 st.success("Incident deleted.")
                 st.rerun
     
@@ -90,6 +99,7 @@ if Domains== "IT tickets":
                 insert_ticket(conn, ticket_id, priority, status, category, subject, description, created_date, assigned_to)
                 st.success("Ticket added.")
                 st.rerun
+
    if data == "Update Ticket":
         with st.form("Update Ticket"):
             resolved_date=st.date_input("Date resolved", format="YYYY-MM-DD")
@@ -99,11 +109,13 @@ if Domains== "IT tickets":
         if submitted and ticket_id:
                 update_ticket_status(conn, resolved_date, status, ticket_id)
                 st.success("Ticket added.")
-                st.rerun
+                st.rerun  
+
    if data == "Delete Ticket":
         with st.form("Delete Ticket"):
             ticket_id=st.text_input("Ticket id")
             submitted=st.form_submit_button("Delete Ticket")
+            st.warning(f"Delete ticket?")
         if submitted and ticket_id:
                 delete_ticket(conn, ticket_id)
                 st.success("Ticket deleted.")
@@ -125,7 +137,7 @@ if Domains== "MetaData":
             file_size_mb=st.number_input("File size", min_value=None, max_value=None)
             submitted=st.form_submit_button("Add New Dataset")
         if submitted and dataset_name:
-                insert_metadata(conn, dataset_name, severity, status)
+                insert_metadata(conn, dataset_name, category, record_count, source, last_updated, file_size_mb)
                 st.success("DataSet added.")
                 st.rerun
 
@@ -143,8 +155,10 @@ if Domains== "MetaData":
         with st.form("Delete Ticket"):
             dataset_name=st.text_input("DataSet Name")
             submitted=st.form_submit_button("Delete Dataset")
+            st.warning(f"Delete Dataset?")
+
         if submitted and ticket_id:
-                insert_ticket(conn, dataset_name)
+                delete_metadata(conn, dataset_name)
                 st.success("Dataset deleted.")
                 st.rerun
    
