@@ -68,12 +68,13 @@ if Domains== "Cyber Incidents":
    if data == "Delete Incident":
         with st.form("Delete Incident"):
             incident_type=st.text_input("Incident type")
+            status=st.selectbox("Status", ["Open", "In Progress", "Resolved"])
             reported_by=st.text_input("Reported By")
             submitted=st.form_submit_button("Delete Incident")
             st.warning(f"Delete incident?")
 
         if submitted and incident_type:
-                delete_incident(conn, incident_type, reported_by)
+                delete_incident(conn, incident_type, status, reported_by)
                 st.success("Incident deleted.")
                 st.rerun
     
@@ -157,7 +158,7 @@ if Domains== "MetaData":
             submitted=st.form_submit_button("Delete Dataset")
             st.warning(f"Delete Dataset?")
 
-        if submitted and ticket_id:
+        if submitted and dataset_name:
                 delete_metadata(conn, dataset_name)
                 st.success("Dataset deleted.")
                 st.rerun
